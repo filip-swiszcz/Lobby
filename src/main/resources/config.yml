@@ -1,0 +1,43 @@
+# Database authorization
+Database:
+  name: 'lobby'
+  username: 'root'
+  password: 'password'
+# Lobby center, where player spawn
+Center:
+# Available ranks
+Ranks:
+  - Developer
+  - Owner
+  - Admin
+  - Moderator
+  - Helper
+  - Player
+Contents:
+  Developer:
+    prefix: '#4b6584[D]'
+    value: 0
+  Owner:
+    prefix: '#fc5c65[W]'
+    value: 1
+  Admin:
+    prefix: '#8854d0[A]'
+    value: 2
+  Moderator:
+    prefix: '#20bf6b[M]'
+    value: 3
+  Helper:
+    prefix: '#3867d6[P]'
+    value: 4
+  Player:
+    prefix: ''
+    value: 5
+# Commands management
+Commands:
+  hide:
+    - about
+  block:
+    - plugins
+Portals:
+  index: 0
+  blocks:
