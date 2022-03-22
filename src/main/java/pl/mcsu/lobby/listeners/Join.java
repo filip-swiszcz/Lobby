@@ -28,7 +28,6 @@ public class Join implements Listener {
         Player player = event.getPlayer();
         player.setPlayerListHeaderFooter("\n" + gradient(Prefixes.name, blue.getColor(), purple.getColor(), true) + "\n", light_gray + "\n   Dołącz do nas również na   \n" + gradient(Prefixes.discord, blue.getColor(), purple.getColor(), false));
         player.setGameMode(GameMode.ADVENTURE);
-
         if (!Organizer.getInstance().hasProfile(player)) {
             player.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 180 * 20, 500));
             Organizer.getInstance().setProfile(player);
