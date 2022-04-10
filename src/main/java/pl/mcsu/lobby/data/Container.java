@@ -1,6 +1,7 @@
 package pl.mcsu.lobby.data;
 
 import org.bukkit.Location;
+import org.bukkit.scoreboard.Scoreboard;
 import pl.mcsu.lobby.objects.Rank;
 import pl.mcsu.lobby.objects.Timer;
 import pl.mcsu.lobby.player.Profile;
@@ -26,6 +27,7 @@ public class Container {
     * */
 
     private final Map<String, Location> center = new HashMap<>();
+    private final Map<String, Scoreboard> scoreboard = new HashMap<>();
     private final Map<UUID, Profile> profiles = new HashMap<>();
     private final Map<String, Rank> ranks = new HashMap<>();
     private final Map<UUID, Timer> timers = new HashMap<>();
@@ -33,6 +35,10 @@ public class Container {
 
     public Map<String, Location> getCenter() {
         return center;
+    }
+
+    public Map<String, Scoreboard> getScoreboard() {
+        return scoreboard;
     }
 
     public Map<UUID, Profile> getProfiles() {

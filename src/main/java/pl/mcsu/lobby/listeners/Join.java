@@ -12,8 +12,7 @@ import pl.mcsu.lobby.database.Queries;
 import pl.mcsu.lobby.manager.Organizer;
 import pl.mcsu.lobby.objects.Rank;
 import pl.mcsu.lobby.utilities.Prefixes;
-import pl.mcsu.lobby.utilities.Sidebars;
-import pl.mcsu.lobby.utilities.Tags;
+import pl.mcsu.lobby.utilities.Tag;
 
 import java.util.Objects;
 
@@ -32,14 +31,12 @@ public class Join implements Listener {
             player.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 180 * 20, 500));
             Organizer.getInstance().setProfile(player);
             Organizer.getInstance().setTimer(player);
-            Sidebars.getInstance().set(player);
-            Tags.getInstance().set(player);
             if (Queries.getInstance().isRegistered(player)) {
                 Organizer.getInstance().getProfile(player).setRegistered(true);
                 String name = Queries.getInstance().getRank(player);
                 Rank rank = Container.getInstance().getRanks().get(name);
                 Organizer.getInstance().getProfile(player).setRank(rank);
-                Tags.getInstance().add(player);
+                Tag.getInstance().set(player);
                 player.sendMessage(success + "Użyj /l [hasło]");
                 player.sendTitle(light_purple + "Logowanie", light_gray + "/l [hasło]", 20, 60 * 20, 20);
                 return;
@@ -47,21 +44,19 @@ public class Join implements Listener {
             String name = "Player";
             Rank rank = Container.getInstance().getRanks().get(name);
             Organizer.getInstance().getProfile(player).setRank(rank);
-            Tags.getInstance().add(player);
+            Tag.getInstance().set(player);
             player.sendMessage(success + "Użyj /r [hasło] [hasło]");
             player.sendTitle(light_purple + "Rejestracja", light_gray + "/r [hasło] [hasło]", 20, 60 * 20, 20);
             return;
         }
         player.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 180 * 20, 500));
-        Sidebars.getInstance().set(player);
-        Tags.getInstance().set(player);
         if (!Organizer.getInstance().getProfile(player).isAuthorized()) {
             Organizer.getInstance().setTimer(player);
             if (Organizer.getInstance().getProfile(player).isRegistered()) {
                 String name = Queries.getInstance().getRank(player);
                 Rank rank = Container.getInstance().getRanks().get(name);
                 Organizer.getInstance().getProfile(player).setRank(rank);
-                Tags.getInstance().add(player);
+                Tag.getInstance().set(player);
                 player.sendMessage(success + "Użyj /l [hasło]");
                 player.sendTitle(light_purple + "Logowanie", light_gray + "/l [hasło]", 20, 60 * 20, 20);
                 return;
@@ -69,7 +64,7 @@ public class Join implements Listener {
             String name = "Player";
             Rank rank = Container.getInstance().getRanks().get(name);
             Organizer.getInstance().getProfile(player).setRank(rank);
-            Tags.getInstance().add(player);
+            Tag.getInstance().set(player);
             player.sendMessage(success + "Użyj /r [hasło] [hasło]");
             player.sendTitle(light_purple + "Rejestracja", light_gray + "/r [hasło] [hasło]", 20, 60 * 20, 20);
             return;
@@ -80,7 +75,7 @@ public class Join implements Listener {
             String name = Queries.getInstance().getRank(player);
             Rank rank = Container.getInstance().getRanks().get(name);
             Organizer.getInstance().getProfile(player).setRank(rank);
-            Tags.getInstance().add(player);
+            Tag.getInstance().set(player);
             player.sendMessage(success + "Użyj /l [hasło]");
             player.sendTitle(light_purple + "Logowanie", light_gray + "/l [hasło]", 20, 60 * 20, 20);
             return;
@@ -89,7 +84,7 @@ public class Join implements Listener {
         String name = Queries.getInstance().getRank(player);
         Rank rank = Container.getInstance().getRanks().get(name);
         Organizer.getInstance().getProfile(player).setRank(rank);
-        Tags.getInstance().add(player);
+        Tag.getInstance().set(player);
         player.sendTitle("", "");
         player.sendActionBar(green + "Zalogowano automatycznie!");
     }

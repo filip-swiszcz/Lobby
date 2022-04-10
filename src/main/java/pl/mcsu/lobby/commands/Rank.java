@@ -9,7 +9,7 @@ import pl.mcsu.lobby.data.Container;
 import pl.mcsu.lobby.database.Queries;
 import pl.mcsu.lobby.manager.Organizer;
 import pl.mcsu.lobby.player.Profile;
-import pl.mcsu.lobby.utilities.Tags;
+import pl.mcsu.lobby.utilities.Tag;
 
 import java.util.Locale;
 
@@ -47,21 +47,21 @@ public class Rank extends Command {
             case "gracz":
                 Queries.getInstance().setRank(target, "Player");
                 Organizer.getInstance().getProfile(target).setRank(Container.getInstance().getRanks().get("Player"));
-                Tags.getInstance().add(player);
+                Tag.getInstance().set(player);
                 player.sendMessage(success + "Ranga " + target.getName() + " została zmieniona.");
                 target.sendMessage(success + "Twoja ranga uległa zmianie.");
                 return true;
             case "pomocnik":
                 Queries.getInstance().setRank(target, "Helper");
                 Organizer.getInstance().getProfile(target).setRank(Container.getInstance().getRanks().get("Helper"));
-                Tags.getInstance().add(player);
+                Tag.getInstance().set(player);
                 player.sendMessage(success + "Ranga " + target.getName() + " została zmieniona.");
                 target.sendMessage(success + "Twoja ranga uległa zmianie.");
                 return true;
             case "moderator":
                 Queries.getInstance().setRank(target, "Moderator");
                 Organizer.getInstance().getProfile(target).setRank(Container.getInstance().getRanks().get("Moderator"));
-                Tags.getInstance().add(player);
+                Tag.getInstance().set(player);
                 player.sendMessage(success + "Ranga " + target.getName() + " została zmieniona.");
                 target.sendMessage(success + "Twoja ranga uległa zmianie.");
                 return true;
@@ -72,7 +72,7 @@ public class Rank extends Command {
                 }
                 Queries.getInstance().setRank(target, "Admin");
                 Organizer.getInstance().getProfile(target).setRank(Container.getInstance().getRanks().get("Admin"));
-                Tags.getInstance().add(player);
+                Tag.getInstance().set(player);
                 player.sendMessage(success + "Ranga " + target.getName() + " została zmieniona.");
                 target.sendMessage(success + "Twoja ranga uległa zmianie.");
                 return true;
@@ -83,7 +83,7 @@ public class Rank extends Command {
                 }
                 Queries.getInstance().setRank(target, "Owner");
                 Organizer.getInstance().getProfile(target).setRank(Container.getInstance().getRanks().get("Owner"));
-                Tags.getInstance().add(player);
+                Tag.getInstance().set(player);
                 player.sendMessage(success + "Ranga " + target.getName() + " została zmieniona.");
                 target.sendMessage(success + "Twoja ranga uległa zmianie.");
                 return true;
@@ -94,7 +94,7 @@ public class Rank extends Command {
                 }
                 Queries.getInstance().setRank(target, "Developer");
                 Organizer.getInstance().getProfile(target).setRank(Container.getInstance().getRanks().get("Developer"));
-                Tags.getInstance().add(player);
+                Tag.getInstance().set(player);
                 player.sendMessage(success + "Ranga " + target.getName() + " została zmieniona.");
                 target.sendMessage(success + "Twoja ranga uległa zmianie.");
                 return true;

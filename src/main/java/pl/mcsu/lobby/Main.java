@@ -1,24 +1,31 @@
 package pl.mcsu.lobby;
 
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.command.CommandMap;
 import org.bukkit.entity.Player;
 import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.scoreboard.DisplaySlot;
+import org.bukkit.scoreboard.Objective;
+import org.bukkit.scoreboard.Scoreboard;
+import org.bukkit.scoreboard.Team;
 import pl.mcsu.lobby.commands.*;
 import pl.mcsu.lobby.commands.Block;
 import pl.mcsu.lobby.data.Container;
 import pl.mcsu.lobby.listeners.*;
 import pl.mcsu.lobby.objects.Rank;
 import pl.mcsu.lobby.proxy.Messaging;
-import pl.mcsu.lobby.utilities.Sidebars;
+import pl.mcsu.lobby.utilities.Prefixes;
+import pl.mcsu.lobby.utilities.Sidebar;
 
 import java.lang.reflect.Field;
 import java.util.Arrays;
 import java.util.Objects;
 
-import static pl.mcsu.lobby.utilities.Colors.convert;
+import static pl.mcsu.lobby.utilities.Colors.*;
 
 public final class Main extends JavaPlugin {
 
@@ -51,8 +58,8 @@ public final class Main extends JavaPlugin {
     private void setCenter() {
         Location location = getConfig().getLocation("Center");
         if (location == null) {
+            location = new Location(Bukkit.getWorld("world"), 0, 100, 0);
             getLogger().info("Center for lobby is not set yet.");
-            return;
         }
         Container.getInstance().getCenter().put("center", location);
     }
@@ -91,6 +98,7 @@ public final class Main extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new Portal(), this);
         getServer().getPluginManager().registerEvents(new Preprocess(), this);
         getServer().getPluginManager().registerEvents(new Quit(), this);
+        getServer().getPluginManager().registerEvents(new Spawn(), this);
     }
 
     private void setMessaging() {
@@ -116,6 +124,22 @@ public final class Main extends JavaPlugin {
             Rank rank = new Rank(name, prefix, value);
             Container.getInstance().getRanks().put(name, rank);
         }
+        Scoreboard scoreboard = Bukkit.getScoreboardManager().getNewScoreboard();
+        for (Rank rank : Container.getInstance().getRanks().values()) {
+            if (scoreboard.getTeam(rank.getValue() + rank.getName()) != null) continue;
+            Team team = scoreboard.registerNewTeam(rank.getValue() + rank.getName());
+            team.color(NamedTextColor.GRAY);
+            if (team.getName().contains("Player")) {
+                team.setPrefix("" + ChatColor.GRAY);
+            } else {
+                team.setPrefix(rank.getPrefix() + " " + gray);
+            }
+            team.setOption(Team.Option.NAME_TAG_VISIBILITY, Team.OptionStatus.ALWAYS);
+            team.setOption(Team.Option.COLLISION_RULE, Team.OptionStatus.ALWAYS);
+            team.setOption(Team.Option.DEATH_MESSAGE_VISIBILITY, Team.OptionStatus.NEVER);
+        }
+        Sidebar.getInstance().set(scoreboard);
+        Container.getInstance().getScoreboard().put("scoreboard", scoreboard);
     }
 
     private void setSidebar() {
@@ -123,8 +147,9 @@ public final class Main extends JavaPlugin {
             @Override
             public void run() {
                 if (Bukkit.getOnlinePlayers().isEmpty()) return;
+                Scoreboard scoreboard = Container.getInstance().getScoreboard().get("scoreboard");
                 for (Player player : Bukkit.getOnlinePlayers()) {
-                    Sidebars.getInstance().update(player);
+                    Sidebar.getInstance().update(scoreboard, player);
                 }
             }
         }, 0, 20*5);

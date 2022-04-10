@@ -5,6 +5,8 @@ Database:
   password: 'password'
 # Lobby center, where player spawn
 Center:
+# Default rank
+Default: 'Player'
 # Available ranks
 Ranks:
   - Developer

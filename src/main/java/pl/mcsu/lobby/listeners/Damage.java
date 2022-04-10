@@ -1,6 +1,5 @@
 package pl.mcsu.lobby.listeners;
 
-import org.bukkit.Location;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -18,7 +17,7 @@ public class Damage implements Listener {
         if (!(entity instanceof Player)) return;
         Player player = (Player) entity;
         if (event.getCause().equals(EntityDamageEvent.DamageCause.VOID)) {
-            player.teleport((Location) Container.getInstance().getCenter().get("center"));
+            player.teleport(Container.getInstance().getCenter().get("center"));
             player.setHealth(20);
             player.sendMessage(success + "Ups! Było blisko.");
             player.setFallDistance(0);
